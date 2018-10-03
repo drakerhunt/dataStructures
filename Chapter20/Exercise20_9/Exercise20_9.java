@@ -58,28 +58,23 @@ public class Exercise20_9 extends Application {
 			animation.play();
 		}
 		
-		ArrayList<Ball> ballList = new ArrayList<Ball>();
 		public void add() {
 			double rand = (double)Math.random() * 20 + 2;
 			Color color = new Color(Math.random(), Math.random(), Math.random(), 0.5);
-			ballList.add(new Ball(30, 30, rand, color));
 			
-			Ball ball = ballList.get(ballList.size() - 1);
+			Ball ball = new Ball(30, 30, rand, color);
 			getChildren().add(ball);
 		}
 		
 		public void subtract() {
 			if (getChildren().size() > 0) {
-				int max = 0;
-				for (int i = 1; i < ballList.size(); i++) {
-					if (ballList.get(i).compareTo(ballList.get(max)) > 0) {
-						System.out.println(ballList.get(max).compareTo(ballList.get(i)));
-						max = i;
+				Ball ball = (Ball)(getChildren().get(0));
+				for (Node node: this.getChildren()) {
+					if (((Ball)node).getRadius() > ball.getRadius()) {
+						ball = (Ball)node;
 					}
 				}
-				getChildren().remove(ballList.get(max));
-				ballList.remove(max);
-				max = 0;
+				getChildren().remove(ball);
 			}
 		}
 		
