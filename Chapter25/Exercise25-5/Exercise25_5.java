@@ -9,6 +9,6 @@ class Exercise25_5 {
 		}
 		BST<Integer> bst = new BST<Integer>(iArray);
 		
-		bst.nonRecursivePostorder();
+		bst.nonRecursivePostorder(bst.getRoot());
 	}
 }

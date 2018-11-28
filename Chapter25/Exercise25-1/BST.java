@@ -67,32 +67,6 @@ public class BST<E extends Comparable<E>>
     return new TreeNode<>(e);
   }
 
-  public void nonRecursiveInorder() {
-     java.util.LinkedList<TreeNode<E>> list =
-        new java.util.LinkedList<TreeNode<E>>();
-        java.util.Stack<TreeNode<E>> stack = new java.util.Stack<TreeNode<E>>();
-      if (root == null) return;
-      
-      stack.push(root);
-      while(!stack.isEmpty()) {
-        TreeNode<E> node = (TreeNode<E>)(stack.peek());
-        if (node.left != null && !list.contains(node.left))
-          stack.push(node.left);
-        else {
-          stack.pop();
-          list.add(node);
-          if (node.right != null)
-            stack.push(node.right);
-        }
-      }
-      
-      for (int i = 0; i < list.size(); i++) {
-        TreeNode<E> temp = list.get(i);
-        
-        System.out.print(temp.element + " ");
-      }
-  }
-  
   @Override /** Inorder traversal from the root */
   public void inorder() {
     inorder(root);
@@ -100,6 +74,20 @@ public class BST<E extends Comparable<E>>
 
   /** Inorder traversal from a subtree */
   protected void inorder(TreeNode<E> root) {
+    java.util.LinkedList<TreeNode<E>> list =
+      new java.util.LinkedList<TreeNode<E>>();
+    if (root == null) return;
+    
+    java.util.Stack<E> stack = new java.util.Stack<E>();
+    stack.push((E)(root));
+    while(!stack.empty()) {
+      TreeNode<E> node = (TreeNode<E>) (stack.peek());
+      if (node.left != null && !list.contains(node.left))
+        stack.push((E)(node.left));
+      if (node.right != null)
+        stack.pop();
+    }
+    
     inorder(root.left);
     System.out.print(root.element + " ");
     inorder(root.right);
@@ -110,30 +98,6 @@ public class BST<E extends Comparable<E>>
     postorder(root);
   }
 
-  public void nonRecursivePostorder(TreeNode<E> root) {
-    java.util.Stack<TreeNode<E>> stack1 = new java.util.Stack<TreeNode<E>>();
-    java.util.Stack<TreeNode<E>> stack2 = new java.util.Stack<TreeNode<E>>();
-      
-    if (root == null) return;
-    
-    stack1.push(root);
-    while(!stack1.empty()) {
-      TreeNode<E> node = (TreeNode<E>)(stack1.pop());
-      stack2.push(node);
-      
-      if (node.left != null) {
-        stack1.push(node.left);
-      }
-      if (node.right != null) {
-        stack1.push(node.right);
-      }
-    }
-    
-    while (!stack2.empty()) {
-     System.out.print(stack2.pop().element + " "); 
-    }
-  }
-  
   /** Postorder traversal from a subtree */
   protected void postorder(TreeNode<E> root) {
     if (root == null) return;
@@ -163,7 +127,7 @@ public class BST<E extends Comparable<E>>
       list.add(root);
       while (!list.isEmpty()) {
         TreeNode<E> node = list.removeFirst();
-        System.out.print(node + " ");
+        System.out.print(node.element + " ");
         if (node.left != null) {
           list.add(node.left);
         }
