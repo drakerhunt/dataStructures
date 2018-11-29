@@ -1,3 +1,5 @@
+import javax.swing.tree.*;
+
 public class BST<E extends Comparable<E>> 
     extends AbstractTree<E> {
   protected TreeNode<E> root;
@@ -137,9 +139,25 @@ public class BST<E extends Comparable<E>>
       }
     }
       
-    public int height(TreeNode<E> node) {
+    public int height() {
+      java.util.LinkedList<TreeNode<E>> list =
+        new java.util.LinkedList<TreeNode<E>>();
       if (root == null) return 0;
-      return Math.max(height(node.left), height(node.right)) + 1;
+      list.add(root);
+      int leftC = 0;
+      int rightC = 0;
+      while (!list.isEmpty()) {
+        TreeNode<E> node = list.removeFirst();
+        if (node.left != null) {
+          list.add(node.left);
+          leftC++;
+        }
+        if (node.right != null) {
+          list.add(node.right);
+          rightC++;
+        }
+      }
+      return Math.max(leftC, rightC);
     }
     
 

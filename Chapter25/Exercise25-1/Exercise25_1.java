@@ -7,6 +7,7 @@ class Exercise25_1 {
 		i[3] = 3;
 		BST<Integer> bst = new BST<Integer>(i);
 		
+		System.out.println(bst.height());
 		bst.breadthFirstTraversal();
 	}
 }
